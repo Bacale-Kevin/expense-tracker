@@ -1,29 +1,24 @@
 import React from "react";
 import { HiOutlineTrash } from "react-icons/hi";
-
-const obj = [
-  {
-    name: "Savings",
-    color: "#f9c74f",
-  },
-  {
-    name: "Investment",
-    color: "#f9c74f",
-  },
-  {
-    name: "Expense",
-    color: "#f9c74f",
-  },
-];
+import { default as api } from "../store/apiSlice";
 
 export default function List() {
+  const { data, isFetching, isSuccess, isError } = api.useGetLabelsQuery();
+
+  let Transactions;
+
+  if (isFetching) {
+    Transactions = <div>Fetching</div>;
+  } else if (isSuccess) {
+    Transactions = data.map((value, i) => <Transaction category={value} key={i} />);
+  } else if (isError) {
+    Transactions = <div>Error</div>;
+  }
+
   return (
     <div className="flex flex-col py-6 gap-3">
       <h1 className="py-4 font-bold text-xl">History</h1>
-
-      {obj.map((value, i) => (
-        <Transaction category={value} key={i} />
-      ))}
+      {Transactions}
     </div>
   );
 }
