@@ -1,4 +1,5 @@
 import React from "react";
+import { default as api } from "../store/apiSlice";
 
 const obj = [
   {
@@ -19,6 +20,7 @@ const obj = [
 ];
 
 export default function Labels() {
+  const { data, isFetching, isSuccess, isError } = api.useGetCategoriesQuery()
   return (
     <>
       {obj.map((value, i) => (
