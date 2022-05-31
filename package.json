@@ -2,9 +2,10 @@
   "name": "server",
   "version": "1.0.0",
   "description": "An Expense Tracker App build using MERN",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server/server.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix server && npm run build --prefix client"
   },
   "keywords": [
     "MERN",

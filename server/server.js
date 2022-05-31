@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const path = require("path");
 
 require("dotenv").config({ path: "./config.env" });
 
@@ -16,13 +17,28 @@ const con = require("./db/connection");
 //using routes
 app.use(require("./routes/route"));
 
-con.then((db) => {
-  if (!db) return process.exit(1);
+//---------------Deployment--------------------//
+const __dirname1 = path.resolve();
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "/client/build"))); //connection with the build folder of the frontend
 
-  //listen to the http server
-  app.listen(port, () => console.log(`Server running on port:http://localhost:${port}`));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname1, "client", "build", "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is Running Successfully");
+  });
+}
+con
+  .then((db) => {
+    if (!db) return process.exit(1);
 
-  app.on(`error`, (err) => console.log(`Failed to connect with HTTP Server:${err}`));
-}).catch(err => {
-    console.log(`Connection failed ... ${err}`)
-})
+    //listen to the http server
+    app.listen(port, () => console.log(`Server running on port:http://localhost:${port}`));
+
+    app.on(`error`, (err) => console.log(`Failed to connect with HTTP Server:${err}`));
+  })
+  .catch((err) => {
+    console.log(`Connection failed ... ${err}`);
+  });

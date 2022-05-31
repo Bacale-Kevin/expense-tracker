@@ -10,7 +10,6 @@ export default function Labels() {
   if (isFetching) {
     Transactions = <div>Fetching</div>;
   } else if (isSuccess) {
-    console.log(getLabels(data, "type"));
     Transactions = getLabels(data, "type").map((value, i) => (
       <LabelComponent key={i} data={value}></LabelComponent>
     ));
