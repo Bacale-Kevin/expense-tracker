@@ -17,6 +17,7 @@ export default function Labels() {
   } else if (isError) {
     Transactions = <div>Error</div>;
   }
+
   return <>{Transactions}</>;
 }
 
