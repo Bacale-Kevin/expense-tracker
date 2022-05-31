@@ -28,6 +28,7 @@ async function create_Transaction(req, res) {
   if (!req.body) return res.status(400).json("Post HTTP Data not provided");
   const { name, type, amount } = req.body;
 
+
   const create = await new model.Transaction({
     name,
     type,
