@@ -30,6 +30,8 @@ if (process.env.NODE_ENV === "production") {
     res.send("API is Running Successfully");
   });
 }
+
+
 con
   .then((db) => {
     if (!db) return process.exit(1);
