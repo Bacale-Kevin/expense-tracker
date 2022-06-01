@@ -14,7 +14,7 @@ export default function List() {
   let Transactions;
 
   if (isFetching) {
-    Transactions = <div>Fetching</div>;
+    Transactions = <div>Fetching...</div>;
   } else if (isSuccess) {
     Transactions = data.map((value, i) => (
       <Transaction category={value} key={i} handler={handleClick} />

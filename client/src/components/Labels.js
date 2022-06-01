@@ -8,11 +8,9 @@ export default function Labels() {
   let Transactions;
 
   if (isFetching) {
-    Transactions = <div>Fetching</div>;
+    Transactions = <div>Fetching...</div>;
   } else if (isSuccess) {
-    Transactions = getLabels(data, "type").map((value, i) => (
-      <LabelComponent key={i} data={value}></LabelComponent>
-    ));
+    Transactions = getLabels(data, "type").map((value, i) => <LabelComponent key={i} data={value}></LabelComponent>);
   } else if (isError) {
     Transactions = <div>Error</div>;
   }
