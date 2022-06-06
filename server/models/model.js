@@ -16,11 +16,19 @@ const transaction_model = new Schema({
   date: { type: Date, default: Date.now },
 });
 
-const  Categories = mongoose.model("Categories", categories_model);
-const Transaction = mongoose.model("Transaction", transaction_model);
+//user_model
+const user_model = new Schema({
+  username: { type: String, required: true },
+  password: { type: String, required: true, unique: true, minlength: 3 },
+});
 
-exports.default = Transaction
+const Categories = mongoose.model("Categories", categories_model);
+const Transaction = mongoose.model("Transaction", transaction_model);
+const User = mongoose.model("User", user_model);
+
+exports.default = Transaction;
 module.exports = {
-    Categories,
-    Transaction
-}
+  Categories,
+  Transaction,
+  User,
+};

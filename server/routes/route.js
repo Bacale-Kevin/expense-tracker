@@ -1,4 +1,5 @@
 const routes = require("express").Router();
+const { signup, login, verifyToken, getUser } = require("../controller/authController");
 const controller = require("../controller/controller");
 
 routes.route("/api/categories").post(controller.create_Categories).get(controller.get_categories);
@@ -9,6 +10,12 @@ routes
   .get(controller.get_Transaction)
   .delete(controller.delete_Transaction);
 
-routes.route('/api/labels').get(controller.get_labels)
+routes.route("/api/labels").get(controller.get_labels);
+
+//authentication
+routes.route("/api/signup").post(signup);
+routes.route("/api/login").post(login);
+routes.route("/api/user").get(verifyToken, getUser);
+// routes.route("/api/user").get();
 
 module.exports = routes;
