@@ -90,7 +90,7 @@ const Form = () => {
           </div>
 
           <div className="submit-btn">
-            <motion.button className="border py-2 text-white bg-indigo-500 w-full hover:bg-indigo-700 transition-all ease-in-out focus:scale-95">
+            <motion.button className="border rounded py-2 text-white bg-indigo-500 w-full hover:bg-indigo-700 transition-all ease-in-out focus:scale-95">
               Make Transaction
             </motion.button>
           </div>
