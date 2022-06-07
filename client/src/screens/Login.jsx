@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { motion } from "framer-motion";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const formSchema = Yup.object().shape({
   username: Yup.string()
@@ -28,10 +29,13 @@ const Login = () => {
     setTogglePassVisibility(!togglePassVisibility);
   };
 
-  const onSubmit = async (data) => {
-    if (!data) return {};
-    console.log(data);
-    // await addTransaction(data).unwrap();
+  const onSubmit = async (userData) => {
+    if (!userData) return {};
+
+    // await loginUser(userData)
+    //   .unwrap()
+    //   .then((payload) => console.log("fulfilled", payload))
+    //   .catch((error) => console.error("rejected", error));
 
     resetField("username");
     resetField("password");
@@ -118,6 +122,9 @@ const Login = () => {
             </button>
           </div>
         </form>
+        <div className="text-xs py-6 mx-auto w-full text-center">
+          Don't have an account ? <Link to="/signup" className="text-green-500 font-semibold underline">Sign up</Link>
+        </div>
       </div>
     </div>
   );

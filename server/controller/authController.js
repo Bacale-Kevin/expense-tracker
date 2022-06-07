@@ -6,18 +6,20 @@ const jwt = require("jsonwebtoken");
 const signup = async (req, res) => {
   const { username, password } = req.body;
 
+  console.log(req.body);
+
   if (username === "" || password === "")
     return res.json({ error: "empty fields are not allowed" });
 
+  let existingUser;
   try {
-    const existingUser = await model.User.findOne({ username });
-    if (existingUser)
-      return res.status(400).json({ error: "This user already exist please login instead" });
+    existingUser = await model.User.findOne({ username });
   } catch (error) {
     console.log(error);
-
-    res.json({ error: error });
   }
+
+  if (existingUser)
+    return res.status(400).send("This user already exist please login instead" );
 
   const hashedPassword = bcrypt.hashSync(password);
   const user = new model.User({
@@ -104,9 +106,7 @@ const getUser = async (req, res, next) => {
   return res.status(200).json(user);
 };
 
-const refreshToken = (req, res, next) => {
-
-}
+const refreshToken = (req, res, next) => {};
 
 module.exports = {
   signup,

@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { motion } from "framer-motion";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+
+import { signupUser } from "../store/authSlice";
 
 const formSchema = Yup.object().shape({
   username: Yup.string()
@@ -17,6 +21,9 @@ const formSchema = Yup.object().shape({
 
 const Signup = () => {
   const formOptions = { resolver: yupResolver(formSchema) };
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { error } = useSelector((state) => state?.user);
 
   const {
     register,
@@ -36,15 +43,25 @@ const Signup = () => {
     setToggleConfirmPassVisibility(!toggleConfirmPassVisibility);
   };
 
+  console.log("ERROR --> ", error);
+
   const onSubmit = async (data) => {
     if (!data) return {};
-    console.log(data);
-    // await addTransaction(data).unwrap();
 
-    resetField("username");
-    resetField("password");
-    resetField("confirmPassword");
+    dispatch(signupUser(data));
+
+    // resetField("username");
+    // resetField("password");
+    // resetField("confirmPassword");
+    // navigate("/login");
   };
+
+  useEffect(() => {
+    console.log("ERROR --> ", error);
+    if (error) {
+      console.log(error);
+    }
+  }, [error]);
 
   return (
     <div className="flex items-center justify-center h-screen">
@@ -63,7 +80,7 @@ const Signup = () => {
               type="text"
               name="username"
               placeholder="Enter username"
-              {...register("username", { required: true, minLengthd: 2 })}
+              {...register("username", { required: true, minLength: 2 })}
             />
             {errors.username ? (
               <motion.div
@@ -167,6 +184,12 @@ const Signup = () => {
             </button>
           </div>
         </form>
+        <div className="text-xs py-6 mx-auto w-full text-center">
+          Already have an account ?{" "}
+          <Link to="/login" className="text-green-500 font-semibold underline">
+            Log in
+          </Link>
+        </div>
       </div>
     </div>
   );
